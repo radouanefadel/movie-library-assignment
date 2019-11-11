@@ -1,53 +1,62 @@
 [
   {
+    "uuid":"526beb69-87cd-4b04-80df-99592f370a05",
     "title":"Ocean's 8",
     "director":"Gary Ross",
     "releaseDate":"13/06/2018",
     "type":"action"
   },
   {
+    "uuid": "053af5cf-42e6-48d0-ab48-7b2970e1dcbf",
     "title":"Solo: A Star Wars Story",
     "director":"Ron Howard",
     "releaseDate":"23/05/2018",
     "type":"Sci-Fi"
   },
   {
+    "uuid": "f7ab7f72-e790-4400-af2a-604a353aa742",
     "title":"Deadpool 2",
     "director":"David Leitch",
     "releaseDate":"16/05/2018",
     "type":"Comedy"
   },
   {
+    "uuid": "0cf35110-67e0-4f82-951c-51cdd2df7fce",
     "title":"Avengers: Infinite War",
     "director":"Anthony Russo, Joe Russo",
     "releaseDate":"25/04/2018",
     "type":"action"
   },
   {
+    "uuid": "88d21f9a-c102-4256-992e-a55171b6bea9",
     "title":"The First Purge",
     "director":"Gerard McMurray",
     "releaseDate":"04/07/2018",
     "type":"Horror"
   },
   {
+    "uuid": "7f3cef0f-7634-4f98-a72d-5cc818ddd09d",
     "title":"Mission: Impossible - Fallout",
     "director":"Christopher McQuarrie",
     "releaseDate":"01/08/2018",
     "type":"Thriller"
   },
   {
+    "uuid": "00fe8eac-e3e3-4d5a-b376-e63c154a7be8",
     "title":"The Mummy",
     "director":"Christopher McQuarrie",
     "releaseDate":"14/06/2017",
     "type":"Fantasy"
   },
   {
+    "uuid": "b94aae06-7099-4409-9cea-9e554efaabc3",
     "title":"Hunger Games",
     "director":"Gary Ross",
     "releaseDate":"21/03/2012",
     "type":"Thriller"
   },
   {
+    "uuid": "c600d434-8ea4-4721-9626-335ccd4eaf1e",
     "title":"John Wick",
     "director":"David Leitch",
     "releaseDate":"29/10/2014",

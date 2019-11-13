@@ -33,4 +33,14 @@ public class TypeServiceImpl implements TypeService {
     public TypeDto save(TypeDto element) {
         return this.save(element);
     }
+
+    @Override
+    public TypeDto update(TypeDto element) {
+        return null;
+    }
+
+    @Override
+    public void delete(String uuid) {
+        this.repository.delete(uuid);
+    }
 }

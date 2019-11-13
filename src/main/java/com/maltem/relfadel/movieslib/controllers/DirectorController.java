@@ -24,8 +24,9 @@ public class DirectorController {
         return this.service.findOne(uuid);
     }
 
-    @RequestMapping
-    public DirectorDto findOneByFullName(@RequestParam(name = "full-name") String fullName) {
+    @RequestMapping("/fullname/{fullname}")
+    public DirectorDto findOneByFullName(@PathVariable String fullName) {
         return this.service.findOneByFullName(fullName);
     }
+
 }

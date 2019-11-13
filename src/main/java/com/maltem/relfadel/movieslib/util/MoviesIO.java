@@ -21,6 +21,9 @@ public class MoviesIO {
     @Value("${datasource.json.location}")
     private String location;
 
+    @Value("${datasource.json.fullPath}")
+    private String fullPath;
+
     public HashSet<MovieFlatDto> read() {
         HashSet<MovieFlatDto> movies = new HashSet<MovieFlatDto>();
         ObjectMapper mapper = new ObjectMapper();
@@ -28,6 +31,7 @@ public class MoviesIO {
         InputStream inputStream = TypeReference.class.getResourceAsStream(this.location);
         try {
             movies = mapper.readValue(inputStream, typeReference);
+            inputStream.close();
         } catch (IOException e) {
             System.out.println("Error while reading the JSON file!");
         }
@@ -40,7 +44,7 @@ public class MoviesIO {
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         try {
             String stringify = writer.writeValueAsString(movies);
-            Files.write(Paths.get("src/main/resources/data/temp-data.json"), stringify.getBytes());
+            Files.write(Paths.get(this.fullPath), stringify.getBytes());
         } catch (IOException e) {
             System.out.println("Error while updating the JSON file!");
         }

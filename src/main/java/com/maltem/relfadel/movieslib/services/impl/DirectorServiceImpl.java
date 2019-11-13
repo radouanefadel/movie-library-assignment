@@ -32,4 +32,14 @@ public class DirectorServiceImpl implements DirectorService {
     public DirectorDto save(DirectorDto element) {
         return null;
     }
+
+    @Override
+    public DirectorDto update(DirectorDto element) {
+        return this.repository.update(element);
+    }
+
+    @Override
+    public void delete(String uuid) {
+        this.repository.delete(uuid);
+    }
 }

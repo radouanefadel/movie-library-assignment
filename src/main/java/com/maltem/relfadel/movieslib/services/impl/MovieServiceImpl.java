@@ -26,6 +26,16 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDto save(MovieDto element) {
-        return null;
+        return repository.save(element);
+    }
+
+    @Override
+    public MovieDto update(MovieDto element) {
+        return this.repository.update(element);
+    }
+
+    @Override
+    public void delete(String uuid) {
+        this.repository.delete(uuid);
     }
 }

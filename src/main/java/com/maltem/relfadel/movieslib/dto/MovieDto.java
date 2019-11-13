@@ -1,10 +1,21 @@
 package com.maltem.relfadel.movieslib.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class MovieDto extends BaseMovieDto {
+    @NonNull
+    @JsonProperty("director")
     private DirectorDto director;
+
+    @NonNull
+    @JsonProperty("type")
     private TypeDto type;
 
     public static MovieDto parse(MovieFlatDto dto) {
@@ -16,4 +27,14 @@ public class MovieDto extends BaseMovieDto {
         movie.setType(new TypeDto(dto.getType()));
         return movie;
     }
+
+
+    public void clone(MovieDto movieDto) {
+        this.setUuid(movieDto.getUuid());
+        this.setTitle(movieDto.getTitle());
+        this.setDirector(movieDto.getDirector());
+        this.setType(movieDto.getType());
+        this.setReleaseDate(movieDto.getReleaseDate());
+    }
+
 }

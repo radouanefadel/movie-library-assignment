@@ -25,4 +25,19 @@ public class MoviesController {
         return new ResponseEntity<>(this.movieService.findOne(uuid), HttpStatus.OK);
     }
 
+    @PostMapping
+    public MovieDto save(@RequestBody MovieDto movieDto) {
+        return this.movieService.save(movieDto);
+    }
+
+    @PutMapping
+    public MovieDto update(@RequestBody MovieDto movieDto) {
+        return this.movieService.update(movieDto);
+    }
+
+    @DeleteMapping("/{uuid}")
+    public void delete(@PathVariable String uuid) {
+        this.movieService.delete(uuid);
+    }
+
 }

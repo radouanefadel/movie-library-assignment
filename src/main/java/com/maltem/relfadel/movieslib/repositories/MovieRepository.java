@@ -21,35 +21,39 @@ public class MovieRepository extends Storage<MovieDto> implements Repository<Mov
     @Override
     public HashSet<MovieDto> findAll() {
         HashSet<MovieFlatDto> movies = this.moviesIO.read();
-        return movies.stream()
+        this.records = movies.stream()
                 .map(movieFlatDto -> MovieDto.parse(movieFlatDto))
                 .collect(Collectors.toCollection(HashSet::new));
+        return this.records;
     }
 
     @Override
     public MovieDto findOne(String uuid) {
-        MovieFlatDto movieFlatDto = this.moviesIO.read()
-                .stream()
+        return this.findAll().stream()
                 .filter(movie -> movie.getUuid().equals(uuid))
                 .findFirst()
                 .orElse(null);
-        return MovieDto.parse(movieFlatDto);
     }
 
     public MovieDto findOneByTitle(String title) {
-        MovieFlatDto movieFlatDto = this.moviesIO.read()
-                .stream()
-                .filter(movie -> movie.getUuid().equalsIgnoreCase(title))
+        return this.findAll().stream()
+                .filter(movie -> movie.getTitle().equalsIgnoreCase(title))
                 .findFirst()
                 .orElse(null);
-        return MovieDto.parse(movieFlatDto);
     }
 
     @Override
     public MovieDto save(MovieDto element) {
         MovieDto temp = this.findOneByTitle(element.getTitle());
         if (temp == null) {
-            this.records.add(element);
+            temp = element;
+            temp.setUuid(null);
+            System.out.println(temp.getDirector() + " " + temp.getType());
+            System.out.println("BEFORE: \n=========");
+            records.forEach(r -> System.out.println(String.format("%s: %s", r.getUuid(), r.getTitle())));
+            this.records.add(temp);
+            System.out.println("AFTER: \n=========");
+            records.forEach(r -> System.out.println(String.format("%s: %s", r.getUuid(), r.getTitle())));
             this.export();
         }
         return temp;
@@ -59,7 +63,8 @@ public class MovieRepository extends Storage<MovieDto> implements Repository<Mov
     public MovieDto update(MovieDto element) {
         MovieDto movieDto = this.findOne(element.getUuid());
         if (movieDto != null) {
-            movieDto = element;
+            movieDto.clone(element);
+            this.records.add(movieDto);
             this.export();
         }
         return movieDto;

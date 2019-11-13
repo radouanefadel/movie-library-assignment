@@ -1,14 +1,20 @@
 package com.maltem.relfadel.movieslib.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
-public abstract class BaseDto extends RepresentationModel {
+@JsonSubTypes({
+        @Type(value = BaseMovieDto.class),
+        @Type(value = DirectorDto.class, name = "director"),
+        @Type(value = TypeDto.class, name="type")
+})
+public abstract class BaseDto {
 
     protected String uuid;
 

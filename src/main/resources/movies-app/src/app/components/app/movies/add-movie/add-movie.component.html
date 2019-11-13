@@ -1,0 +1,41 @@
+<button type="button" class="btn btn-outline-info btn-block" (click)="openModal(template)">
+    Add movie
+</button>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add movie</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formGroup" (validSubmit)="submit()">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" class="form-control" formControlName="Title" />
+            </div>
+            <div class="form-group">
+                <label for="director_fullname">Director</label>
+                <input type="text" name="director_fullname" class="form-control" formControlName="DirectorFullName" />
+            </div>
+            <div class="form-group">
+                <label for="release_date">Release date</label>
+                <input 
+                    type="text"
+                    placeholder="Datepicker"
+                    class="form-control"
+                    bsDatepicker [bsConfig]="bsConfig"
+                    formControlName="ReleaseDate"
+                />
+            </div>
+            <div class="form-group">
+                <label for="type_label">Type</label>
+                <input type="text" name="type_label" class="form-control" formControlName="TypeLabel" />
+            </div>
+            <button class="btn btn-success btn-block" type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+</ng-template>

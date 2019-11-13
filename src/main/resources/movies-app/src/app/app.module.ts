@@ -10,7 +10,7 @@ import { MainModule } from './components/app/main.module';
   ],
   imports: [
     BrowserModule,
-    MainModule,
+    MainModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,29 @@
-<p>movies works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-10">
+            <div class="input-group mb-3">
+                <input (keyup)="search($event)" type="text" class="form-control" placeholder="Search by title, director, release date or type ..." />
+                <div class="input-group-append">
+                    <button (click)="load()" class="btn btn-outline-secondary" type="button">
+                        Reload
+                        <i class="mdi mdi-reload"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            <mv-add-movie></mv-add-movie>
+        </div>
+    </div>
+    <ngx-datatable
+        style="height: 380px;"
+        class="bootstrap"
+        [rows]="rows"
+        [rowHeight]="32"
+        [columns]="columns"
+        columnMode="force"
+        [footerHeight]="40"
+        [rowHeight]="50"
+        [scrollbarV]="true"
+    ></ngx-datatable>
+</div>

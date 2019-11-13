@@ -7,6 +7,6 @@ const routes: Routes = ROUTES;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule ]
 })
 export class MainRoutingModule { }

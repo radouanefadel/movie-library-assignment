@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@mdi/font/css/materialdesignicons.min.css';
+@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
+@import '../node_modules/@swimlane/ngx-datatable/index.scss';
+@import '../node_modules/@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+
+
+html,
+body {
+  height: 100%;
+}
+
+.body-height {
+  height: 420px !important;
+}

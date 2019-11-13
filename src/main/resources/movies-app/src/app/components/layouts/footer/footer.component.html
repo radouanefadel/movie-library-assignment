@@ -1,1 +1,18 @@
-<p>footer works!</p>
+<footer id="sticky-footer" class="bg-dark">
+    <div class="container py-3">
+        <div class="d-flex justify-content-center">
+            <div *ngFor="let link of links">
+                <a class="btn btn-dark btn-sm mx-2" routerLink="{{ link.path }}">
+                    {{ link.title }}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center text-white-50 footer-copy py-2">
+        <small>
+            <span class="font-weight-light">{{ fullName }}</span>
+            @
+            <span class="font-weight-bolder text-white">{{ companyName }}</span>
+        </small>
+    </div>
+</footer>

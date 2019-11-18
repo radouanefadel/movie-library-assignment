@@ -9,9 +9,9 @@ import com.maltem.relfadel.movieslib.dto.MovieFlatDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 
@@ -30,7 +30,7 @@ public class MoviesIO {
         TypeReference<HashSet<MovieFlatDto>> typeReference = new TypeReference<HashSet<MovieFlatDto>>(){};
         InputStream inputStream = TypeReference.class.getResourceAsStream(this.location);
         try {
-            movies = mapper.readValue(inputStream, typeReference);
+            movies = mapper.readValue(new File(Paths.get(this.fullPath).toAbsolutePath().toString()), typeReference);
             inputStream.close();
         } catch (IOException e) {
             System.out.println("Error while reading the JSON file!");
@@ -44,7 +44,8 @@ public class MoviesIO {
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         try {
             String stringify = writer.writeValueAsString(movies);
-            Files.write(Paths.get(this.fullPath), stringify.getBytes());
+            mapper.writeValue(new File(Paths.get(this.fullPath).toAbsolutePath().toString()), movies);
+            // Files.write(Paths.get(this.fullPath), stringify.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
             System.out.println("Error while updating the JSON file!");
         }

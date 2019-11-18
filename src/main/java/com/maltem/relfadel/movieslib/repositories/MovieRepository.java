@@ -46,14 +46,9 @@ public class MovieRepository extends Storage<MovieDto> implements Repository<Mov
     public MovieDto save(MovieDto element) {
         MovieDto temp = this.findOneByTitle(element.getTitle());
         if (temp == null) {
-            temp = element;
-            temp.setUuid(null);
-            System.out.println(temp.getDirector() + " " + temp.getType());
-            System.out.println("BEFORE: \n=========");
-            records.forEach(r -> System.out.println(String.format("%s: %s", r.getUuid(), r.getTitle())));
+            temp = new MovieDto();
+            temp.clone(element);
             this.records.add(temp);
-            System.out.println("AFTER: \n=========");
-            records.forEach(r -> System.out.println(String.format("%s: %s", r.getUuid(), r.getTitle())));
             this.export();
         }
         return temp;
@@ -64,7 +59,6 @@ public class MovieRepository extends Storage<MovieDto> implements Repository<Mov
         MovieDto movieDto = this.findOne(element.getUuid());
         if (movieDto != null) {
             movieDto.clone(element);
-            this.records.add(movieDto);
             this.export();
         }
         return movieDto;

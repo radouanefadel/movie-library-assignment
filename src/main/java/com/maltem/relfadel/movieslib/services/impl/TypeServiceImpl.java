@@ -30,6 +30,9 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    public TypeDto findMovies(String label) { return this.repository.findMovies(label); }
+
+    @Override
     public TypeDto save(TypeDto element) {
         return this.save(element);
     }

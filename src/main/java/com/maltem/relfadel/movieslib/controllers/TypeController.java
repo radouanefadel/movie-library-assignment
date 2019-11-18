@@ -26,4 +26,9 @@ public class TypeController {
     public TypeDto findOne(@PathVariable String uuid) {
         return this.service.findOne(uuid);
     }
+
+    @GetMapping("/{label}/movies")
+    public TypeDto findMovies(@PathVariable String label) {
+        return this.service.findMovies(label);
+    }
 }

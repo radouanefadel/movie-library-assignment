@@ -1,6 +1,6 @@
 package com.maltem.relfadel.movieslib.repositories;
 
-import com.maltem.relfadel.movieslib.dto.MovieFlatDto;
+import com.maltem.relfadel.movieslib.dto.MovieDto;
 import com.maltem.relfadel.movieslib.dto.TypeDto;
 import com.maltem.relfadel.movieslib.util.MoviesIO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,9 @@ public class TypeRepository extends Storage<TypeDto> implements Repository<TypeD
     @Autowired
     private MoviesIO moviesIO;
 
+    @Autowired
+    private MovieRepository movieRepository;
+
     @Override
     public HashSet<TypeDto> findAll() {
         return this.records.isEmpty() ? this.getRecords() : this.records;
@@ -23,50 +26,56 @@ public class TypeRepository extends Storage<TypeDto> implements Repository<TypeD
     @Override
     public TypeDto findOne(String uuid) {
         return this.records.stream()
-                .filter(typeDto -> typeDto.getUuid().equals(uuid))
+                .filter(type -> type.getUuid().equals(uuid))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public TypeDto findOneByLabel(String label) {
+        return this.records.stream()
+                .filter(type -> type.getLabel().equalsIgnoreCase(label))
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
     public TypeDto save(TypeDto element) {
-        this.records.add(element);
-        return element;
+        return null;
     }
 
     @Override
     public TypeDto update(TypeDto element) {
-        TypeDto typeDto = this.findOne(element.getUuid());
-        typeDto = element;
-        return typeDto;
-    }
-
-    @Override
-    public void delete(String uuid) {
-        TypeDto typeDto = this.findOne(uuid);
-        this.records.remove(typeDto);
-    }
-
-    public TypeDto findOneByLabel(String label) {
-        return this.records.stream()
-                .filter(typeDto -> typeDto.getLabel().equalsIgnoreCase(label))
-                .findFirst()
-                .orElse(null);
+        return null;
     }
 
     @Override
     public HashSet<TypeDto> getRecords() {
-        HashSet<MovieFlatDto> movies = this.moviesIO.read();
-        HashSet<String> typeLabels = movies.stream()
-                .map(movieFlatDto -> movieFlatDto.getType())
+        HashSet<MovieDto> movies = this.movieRepository.findAll();
+        HashSet<String> typeNames = movies.stream()
+                .map(movie -> movie.getType().getLabel())
                 .collect(Collectors.toCollection(HashSet::new));
-        typeLabels.forEach(label -> {
-            if (this.records.isEmpty() || this.findOneByLabel(label) == null) {
-                TypeDto typeDto = new TypeDto(label);
-                typeDto.setUuid(null);
-                this.records.add(typeDto);
+        typeNames.forEach(typeName -> {
+            if (this.records.isEmpty() || this.findOneByLabel(typeName) == null) {
+                TypeDto type = new TypeDto(typeName);
+                type.setUuid(null);
+                this.records.add(type);
             }
         });
         return this.records;
     };
+
+    @Override
+    public void delete(String uuid) { ; };
+
+    public TypeDto findMovies(String label) {
+        TypeDto type = this.findOneByLabel(label);
+        if (type != null) {
+            HashSet<MovieDto> movies = this.movieRepository.records
+                    .stream()
+                    .filter(movie -> movie.getType().getLabel().equalsIgnoreCase(label))
+                    .collect(Collectors.toCollection(HashSet::new));
+            type.setMovies(movies);
+        }
+        return type;
+    }
 }

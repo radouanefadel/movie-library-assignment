@@ -1,0 +1,55 @@
+[ {
+  "uuid" : "73244742-c2cd-40e3-b53d-de26e491f06c",
+  "title" : "Hunger Games",
+  "releaseDate" : "21/03/2012",
+  "director" : "Gary Ross",
+  "type" : "Thriller"
+}, {
+  "uuid" : "f9ab4ffa-a37f-4c33-b8c6-1fc55832f132",
+  "title" : "John Wick",
+  "releaseDate" : "29/10/2014",
+  "director" : "David Leitch",
+  "type" : "Thriller"
+}, {
+  "uuid" : "14b240fe-a8d6-4ace-a18f-207985b73207",
+  "title" : "Ocean's 8",
+  "releaseDate" : "13/06/2018",
+  "director" : "Gary Ross",
+  "type" : "action"
+}, {
+  "uuid" : "d710c0cf-2044-4b50-af0f-955df5b60e0b",
+  "title" : "Avengers: Infinite War",
+  "releaseDate" : "25/04/2018",
+  "director" : "Anthony Russo, Joe Russo",
+  "type" : "action"
+}, {
+  "uuid" : "492a9743-85f0-4986-ab90-8205dc07952c",
+  "title" : "Deadpool 2",
+  "releaseDate" : "16/05/2018",
+  "director" : "David Leitch",
+  "type" : "Comedy"
+}, {
+  "uuid" : "f7471316-b043-4f9c-b037-0d630188e8eb",
+  "title" : "The First Purge",
+  "releaseDate" : "04/07/2018",
+  "director" : "Gerard McMurray",
+  "type" : "Horror"
+}, {
+  "uuid" : "78c4abf7-c41d-49ee-9c13-08526590a49b",
+  "title" : "Solo: A Star Wars Story",
+  "releaseDate" : "23/05/2018",
+  "director" : "Ron Howard",
+  "type" : "Sci-Fi"
+}, {
+  "uuid" : "590d2082-5445-4f62-9c8e-2d4dfa552864",
+  "title" : "Mission: Impossible - Fallout",
+  "releaseDate" : "01/08/2018",
+  "director" : "Christopher McQuarrie",
+  "type" : "Thriller"
+}, {
+  "uuid" : "3ed638b7-67e9-4847-809d-003f83f5d54a",
+  "title" : "The Mummy",
+  "releaseDate" : "14/06/2017",
+  "director" : "Christopher McQuarrie",
+  "type" : "Fantasy"
+} ]

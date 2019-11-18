@@ -3,7 +3,7 @@ Run application by using the following command line:
 ```console
 ng serve
 ```
-and go to [localhost:4200]()
+and go to [http://localhost:4200]()
 ## Pages
 - [Home page](localhost:4200/home) `/home`;
 - [Movies page](localhost:4200/movies) `/movies`;

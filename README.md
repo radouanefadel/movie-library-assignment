@@ -8,7 +8,7 @@ Run REST API as a maven project
 mvn spring-boot:run
 ```
 #### Front-end (Angular)
-Run application by using **Angular-cli** and go to [localhost:4200]()
+Run application by using **Angular-cli** and go to [http://localhost:4200]()
 ```console
 ng serve
 ```

@@ -1,10 +1,10 @@
-<button type="button" class="btn btn-outline-light btn-sm btn-block" (click)="openModal(template)">
-    Add movie
+<button id="update-movie" type="button" class="btn btn-outline-info btn-block invisible" (click)="openModal(template)">
+    Update movie
 </button>
 
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Add movie</h4>
+        <h4 class="modal-title pull-left">Update movie</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -35,7 +35,7 @@
                 <input type="text" name="type_label" class="form-control" formControlName="TypeLabel" />
             </div>
             <button class="btn btn-success btn-block" type="submit">
-                Submit
+                Update
             </button>
         </form>
     </div>

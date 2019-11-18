@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row d-flex">
+        <div class="col-xs-12 col-sm-6">
+            <div class="card bg-light">
+                <div class="card-header p-0">
+                    <div class="input-group">
+                        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Find director ..." />
+                        <div class="input-group-append">
+                            <button (click)="load()" class="btn btn-outline-dark" type="button">
+                                Refresh
+                                <i class="mdi mdi-reload"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="height: 256px; max-height: 256px; overflow-y: auto;">
+                    <ul class="list-group">
+                        <li *ngFor="let director of directors" (click)="findMovies(director)" [class.selected]="selected(director)" class="list-group-item list-group-item-action">
+                            {{ director.fullName }}
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="!!directors" class="card-footer bg-dark text-white p-2">
+                    <small>
+                        <strong>{{ directors.length }}</strong> director(s)
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div *ngIf="!!currentDirector; else noDirectorSelected" class="card bg-light">
+                <div class="card-header p-2 d-flex">
+                    <div>
+                        Movies directed by <span class="font-weight-bold">{{ currentDirector.fullName }}</span>
+                    </div>
+                    <div *ngIf="!!currentDirector.movies" class="ml-auto badge badge-pill badge-secondary">{{ currentDirector.movies.length }}</div>
+                </div>
+                <div class="card-body" style="height: 256px; max-height: 256px; overflow-y: auto;">
+                    <ul class="list-group" *ngIf="!!movies.length; else noResult">
+                        <li *ngFor="let movie of movies" class="list-group-item">
+                            <h6 class="font-weight-bold text-info">{{ movie.title }}</h6>
+                            <p class="mb-0">Released at:
+                                <span class="text-black-50">{{ movie.releaseDate }}</span>
+                                <em class="blockquote-footer">{{ movie.type.label }}</em>
+                            </p>
+                        </li>
+                    </ul>
+                    <ng-template #noResult>
+                        <div>No movie</div>
+                    </ng-template>
+                </div>
+                <div class="card-footer p-0">
+                    <div class="input-group">
+                        <input (keyup)="searchMovies($event)" type="text" class="form-control" placeholder="Find movies by title, release date or type ..." />
+                        <div class="input-group-append">
+                            <button (click)="findMovies(currentDirector)" class="btn btn-outline-dark" type="button">
+                                Reload
+                                <i class="mdi mdi-reload"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noDirectorSelected>
+                <div class="bg-secondary text-white-50 p-3 text-center" style="height: 100%;">
+                    <h1 class="display-4 text-white">Movies</h1>
+                    <p class="lead">Select a director to display movie.</p>
+                    <hr class="bg-light" />
+                    <h1 class="display-4 mdi mdi-movie-search-outline"></h1>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

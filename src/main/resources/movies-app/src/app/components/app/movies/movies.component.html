@@ -1,29 +1,101 @@
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-md-10">
-            <div class="input-group mb-3">
-                <input (keyup)="search($event)" type="text" class="form-control" placeholder="Search by title, director, release date or type ..." />
-                <div class="input-group-append">
-                    <button (click)="load()" class="btn btn-outline-secondary" type="button">
-                        Reload
-                        <i class="mdi mdi-reload"></i>
-                    </button>
+    <div class="card">
+        <div class="card-header bg-dark p-1">
+            <div class="row">
+                <div class="col-xs-12 col-md-10">
+                    <div class="input-group input-group-sm mb-3">
+                        <input (keyup)="search($event)" type="text" class="form-control form-control-sm" placeholder="Search by title, director, release date or type ..." />
+                        <div class="input-group-append">
+                            <button (click)="load()" class="btn btn-sm btn-dark" type="button">
+                                Reload
+                                <i class="mdi mdi-reload"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <mv-add-movie></mv-add-movie>
+                </div>
+            </div>
+            <div class="row datatable-header m-0 bg-dark text-white-50">
+                <div class="col-sm-3 px-0 datatable-header-cell" (click)="sort('title')">
+                    <span>
+                        <i *ngIf="!filters[0].desc; else desc" class="mdi mdi-chevron-up"></i>
+                        <ng-template #desc>
+                            <i class="mdi mdi-chevron-down"></i>
+                        </ng-template>
+                    </span>
+                    <span>Title</span>
+                </div>
+                <div class="col-sm-3 px-0 datatable-header-cell" (click)="sort('director')">
+                    <span>
+                        <i *ngIf="!filters[1].desc; else desc" class="mdi mdi-chevron-up"></i>
+                        <ng-template #desc>
+                            <i class="mdi mdi-chevron-down"></i>
+                        </ng-template>
+                    </span>
+                    <span>Director</span>
+                </div>
+                <div class="col-sm-2 px-0 datatable-header-cell" (click)="sort('releaseDate')">
+                    <span>
+                        <i *ngIf="!filters[2].desc; else desc" class="mdi mdi-chevron-up"></i>
+                        <ng-template #desc>
+                            <i class="mdi mdi-chevron-down"></i>
+                        </ng-template>
+                    </span>
+                    <span>Release date</span>
+                </div>
+                <div class="col-sm-2 px-0 datatable-header-cell" (click)="sort('type')">
+                    <span>
+                        <i *ngIf="!filters[3].desc; else desc" class="mdi mdi-chevron-up"></i>
+                        <ng-template #desc>
+                            <i class="mdi mdi-chevron-down"></i>
+                        </ng-template>
+                    </span>
+                    <span>Type</span>
+                </div>
+                <div class="col-sm-2 px-0 datatable-header-cell">
+                    <i class="mdi mdi-dots-horizontal"></i>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-2">
-            <mv-add-movie></mv-add-movie>
+        <div class="card-body datatable-body overflow-auto scroll-horz">
+            <div class="row datatable-body-row align-items-center" *ngFor="let movie of movies">
+                <div class="col-sm-3 datatable-body-cell">
+                    {{ movie.title }}
+                </div>
+                <div class="col-sm-3 datatable-body-cell">
+                    {{ movie.director }}
+                </div>
+                <div class="col-sm-2 datatable-body-cell">
+                    {{ movie.releaseDate }}
+                </div>
+                <div class="col-sm-2 datatable-body-cell">
+                    {{ movie.type }}
+                </div>
+                <div class="col-sm-2 px-0 datatable-body-cell">
+                    <div class="btn-group d-flex">
+                        <button (click)="update(movie)" class="btn btn-sm btn-outline-dark">
+                            Update
+                            <i class="mdi mdi-movie-edit-outline"></i>
+                        </button>
+                        <button (click)="delete(movie)" class="btn btn-sm btn-outline-danger">
+                            Delete
+                            <i class="mdi mdi-close"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-white bg-dark">
+            <small>
+                <span class="font-weight-bold">{{ movies.length }}</span> item(s)
+            </small>
         </div>
     </div>
-    <ngx-datatable
-        style="height: 380px;"
-        class="bootstrap"
-        [rows]="rows"
-        [rowHeight]="32"
-        [columns]="columns"
-        columnMode="force"
-        [footerHeight]="40"
-        [rowHeight]="50"
-        [scrollbarV]="true"
-    ></ngx-datatable>
+    <mv-edit-movie
+        *ngIf="!!currentMovie"
+        [movie]="currentMovie"
+        (movie-updated)="updateHandler($event)"
+    ></mv-edit-movie>
 </div>

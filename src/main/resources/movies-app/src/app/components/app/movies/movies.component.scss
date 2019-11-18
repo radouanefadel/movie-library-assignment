@@ -1,0 +1,26 @@
+$max-height: 250px;
+
+.datatable {
+    &-header {
+        &-cell {
+            &:hover {
+                cursor: pointer;
+                color: #fff;
+            }
+        }
+    }
+    &-body {
+        height: $max-height;
+        max-height: $max-height;
+        &-row {
+            border: 1px solid #ddd;
+            &:nth-child(odd) {
+                background-color: #fafafa;
+            }
+            &:hover {
+                cursor: default;
+                background-color: #bac4ca;
+            }
+        }
+    }
+}

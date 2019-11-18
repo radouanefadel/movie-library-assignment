@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row d-flex">
+        <div class="col-xs-12 col-sm-6">
+            <div class="card bg-light">
+                <div class="card-header p-0">
+                    <div class="input-group">
+                        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Find type ..." />
+                        <div class="input-group-append">
+                            <button (click)="load()" class="btn btn-outline-dark" type="button">
+                                Refresh
+                                <i class="mdi mdi-reload"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="height: 256px; max-height: 256px; overflow-y: auto;">
+                    <ul class="list-group">
+                        <li *ngFor="let type of types" (click)="findMovies(type)" [class.selected]="selected(type)" class="list-group-item list-group-item-action">
+                            {{ type.label }}
+                        </li>
+                    </ul>
+                </div>
+                <div *ngIf="!!types" class="card-footer bg-dark text-white p-2">
+                    <small>
+                        <strong>{{ types.length }}</strong> type(s)
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div *ngIf="!!currentType; else notypeSelected" class="card bg-light">
+                <div class="card-header p-2 d-flex">
+                    <div>
+                        Movies for <span class="font-weight-bold">{{ currentType.label }}</span> type.
+                    </div>
+                    <div *ngIf="!!currentType.movies" class="ml-auto badge badge-pill badge-secondary">{{ currentType.movies.length }}</div>
+                </div>
+                <div class="card-body" style="height: 256px; max-height: 256px; overflow-y: auto;">
+                    <ul class="list-group" *ngIf="!!movies.length; else noResult">
+                        <li *ngFor="let movie of movies" class="list-group-item">
+                            <h6 class="font-weight-bold text-info">{{ movie.title }}</h6>
+                            <p class="mb-0">Released at:
+                                <span class="text-black-50">{{ movie.releaseDate }}</span>
+                                <em class="blockquote-footer">
+                                    Directed by
+                                    <strong>{{ movie.director.fullName }}</strong>
+                                </em>
+                            </p>
+                        </li>
+                    </ul>
+                    <ng-template #noResult>
+                        <div>No movie</div>
+                    </ng-template>
+                </div>
+                <div class="card-footer p-0">
+                    <div class="input-group">
+                        <input (keyup)="searchMovies($event)" type="text" class="form-control" placeholder="Find movies by title, release date or director ..." />
+                        <div class="input-group-append">
+                            <button (click)="findMovies(currentType)" class="btn btn-outline-dark" type="button">
+                                Reload
+                                <i class="mdi mdi-reload"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #notypeSelected>
+                <div class="bg-secondary text-white-50 p-3 text-center" style="height: 100%;">
+                    <h1 class="display-4 text-white">Movies</h1>
+                    <p class="lead">Select a type to display movie.</p>
+                    <hr class="bg-light" />
+                    <h1 class="display-4 mdi mdi-movie-search-outline"></h1>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

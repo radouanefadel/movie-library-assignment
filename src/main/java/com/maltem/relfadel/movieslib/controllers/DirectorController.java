@@ -19,14 +19,14 @@ public class DirectorController {
         return this.service.findAll();
     }
 
-    @RequestMapping("/{uuid}")
+    @GetMapping("/{uuid}")
     public DirectorDto findOne(@PathVariable String uuid) {
         return this.service.findOne(uuid);
     }
 
-    @RequestMapping("/fullname/{fullname}")
-    public DirectorDto findOneByFullName(@PathVariable String fullName) {
-        return this.service.findOneByFullName(fullName);
+    @GetMapping("/{fullName}/movies")
+    public DirectorDto findMovies(@PathVariable String fullName) {
+        return this.service.findMovies(fullName);
     }
 
 }

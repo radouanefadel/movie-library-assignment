@@ -1,7 +1,7 @@
 package com.maltem.relfadel.movieslib.repositories;
 
 import com.maltem.relfadel.movieslib.dto.DirectorDto;
-import com.maltem.relfadel.movieslib.dto.MovieFlatDto;
+import com.maltem.relfadel.movieslib.dto.MovieDto;
 import com.maltem.relfadel.movieslib.util.MoviesIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +14,9 @@ public class DirectorRepository extends Storage<DirectorDto> implements Reposito
 
     @Autowired
     private MoviesIO moviesIO;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     @Override
     public HashSet<DirectorDto> findAll() {
@@ -47,9 +50,9 @@ public class DirectorRepository extends Storage<DirectorDto> implements Reposito
 
     @Override
     public HashSet<DirectorDto> getRecords() {
-        HashSet<MovieFlatDto> movies = this.moviesIO.read();
+        HashSet<MovieDto> movies = this.movieRepository.findAll();
         HashSet<String> directorNames = movies.stream()
-                .map(movieFlatDto -> movieFlatDto.getDirector())
+                .map(movie -> movie.getDirector().getFullName())
                 .collect(Collectors.toCollection(HashSet::new));
         directorNames.forEach(directorName -> {
             if (this.records.isEmpty() || this.findOneByFullName(directorName) == null) {
@@ -62,5 +65,17 @@ public class DirectorRepository extends Storage<DirectorDto> implements Reposito
     };
 
     @Override
-    public void delete(String uuid) { ; }
+    public void delete(String uuid) { ; };
+
+    public DirectorDto findMovies(String fullName) {
+        DirectorDto director = this.findOneByFullName(fullName);
+        if (director != null) {
+            HashSet<MovieDto> movies = this.movieRepository.records
+                    .stream()
+                    .filter(movie -> movie.getDirector().getFullName().equalsIgnoreCase(fullName))
+                    .collect(Collectors.toCollection(HashSet::new));
+            director.setMovies(movies);
+        }
+        return director;
+    }
 }

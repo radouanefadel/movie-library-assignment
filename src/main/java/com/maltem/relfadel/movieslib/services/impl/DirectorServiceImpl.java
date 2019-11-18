@@ -29,6 +29,11 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
+    public DirectorDto findMovies(String fullName) {
+        return this.repository.findMovies(fullName);
+    }
+
+    @Override
     public DirectorDto save(DirectorDto element) {
         return null;
     }

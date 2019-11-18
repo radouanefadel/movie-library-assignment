@@ -3,7 +3,15 @@ This is a small project to manage movies.
 
 ## Quick start
 #### REST API
-Run REST API as a maven project
+##### Install dependencies
+```console
+mvn install
+```
+Or
+```console
+mvn package
+```
+##### Run REST API as a maven project
 ```console
 mvn spring-boot:run
 ```

@@ -1,23 +1,30 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef, ModalOptions, ModalDirective } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { frLocale } from 'ngx-bootstrap/locale'
-import { getFrenchDate } from 'src/app/core/utils/functions';
+import { getFrenchDate, parse } from 'src/app/core/utils/functions';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { MovieFlat } from 'src/app/core/models/movie-flat';
 
 
 @Component({
-  selector: 'mv-add-movie',
-  templateUrl: './add-movie.component.html',
+  selector: 'mv-edit-movie',
+  templateUrl: './edit-movie.component.html',
   styles: []
 })
-export class AddMovieComponent implements OnInit {
+export class EditMovieComponent implements OnInit {
 
   private locale: string = "fr";
   private modalRef: BsModalRef;
+
+  @ViewChild(ModalDirective, { static: false })
+  private modal: ModalDirective;
+
+  @Output('movie-updated')
+  private movieEventEmitter: EventEmitter<MovieFlat> = new EventEmitter();;
+  
   private bsConfig: Partial<BsDatepickerConfig>;
   private config: ModalOptions = {
     backdrop: 'static',
@@ -28,15 +35,26 @@ export class AddMovieComponent implements OnInit {
 
   alerts: any[] = [{
     type: 'success',
-    msg: 'Movie has been added successfully',
-    timeout: 2500
+    msg: 'Movie has been updated successfully',
   }, {
     type: 'danger',
     msg: 'Unknown error.',
-    timeout: 2500
   }];
 
-  private alert: any = {}
+  private movie: MovieFlat;
+
+  @Input('movie')
+  set _movie(val: MovieFlat) {
+    if (!!val) {
+      this.movie = val;
+      const btn: HTMLElement = document.getElementById('update-movie');
+      if (!!btn) {
+        btn.click();
+      }
+    }
+  }
+
+  private alert: any = null;
 
 
   constructor(
@@ -48,10 +66,13 @@ export class AddMovieComponent implements OnInit {
   ngOnInit() {
     this.initValidator();
     this.initPicker();
+    this.setValues();
   }
  
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, this.config);
+    let self = this;
+    self.modalRef = self.modalService.show(template, self.config);
+    self.modalService.onHidden.subscribe($e => this.movieEventEmitter.emit(null));
   }
 
   initPicker(): void {
@@ -75,9 +96,20 @@ export class AddMovieComponent implements OnInit {
     });
   }
 
+  setValues() {
+    if (!!this.movie) {
+      let controls = this.formGroup.controls;
+      controls.Title.patchValue(this.movie.title)
+      controls.DirectorFullName.patchValue(this.movie.director)
+      controls.ReleaseDate.patchValue(parse(this.movie.releaseDate))
+      controls.TypeLabel.patchValue(this.movie.type)
+    }
+  }
+
   getPayload(formGroup: FormGroup): MovieFlat {
     const controls = formGroup.controls;
     return {
+      uuid: this.movie.uuid,
       title: controls.Title.value,
       director: controls.DirectorFullName.value,
       releaseDate: getFrenchDate(controls.ReleaseDate.value),
@@ -88,19 +120,21 @@ export class AddMovieComponent implements OnInit {
   submit() {
     let self = this;
     const payload: MovieFlat = self.getPayload(self.formGroup);
-    self.httpService.save(payload).subscribe(
+    self.httpService.update(payload).subscribe(
       data => {
         if (!!data) {
           self.reset();
-          self.alert = self.alerts.find(a => a.type === 'success');
+          self.alert = self.alerts.find(alert => alert.type === 'success');
         }
       },
       error => self.alert = self.alerts.find(a => a.type === 'danger'),
-      () => alert(self.alert.msg)
+      () => alert(this.alert.msg)
     );
   }
  
   reset() {
     this.formGroup.reset();
   }
+
+
 }

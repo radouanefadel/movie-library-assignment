@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ModalModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ModalModule, BsDatepickerModule, AlertModule } from 'ngx-bootstrap';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 
 import { MainRoutingModule } from './main-routing.module';
@@ -13,8 +13,9 @@ import { MainComponent } from './main.component';
 import { HomeComponent } from './home/home.component';
 import { COMPONENTS as LayoutComponents } from '../layouts';
 import { MoviesComponents } from './movies';
-
-
+import { DirectorsComponents } from './directors';
+import { TypesComponents } from './types';
+import { ErrorsComponents } from './errors';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,9 @@ import { MoviesComponents } from './movies';
     HomeComponent,
     ...LayoutComponents,
     ...MoviesComponents,
+    ...DirectorsComponents,
+    ...TypesComponents,
+    ...ErrorsComponents,
   ],
   imports: [
     CommonModule,
@@ -30,8 +34,11 @@ import { MoviesComponents } from './movies';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    // #region (ngx-bootstrap)
+    AlertModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    // #endRegion (ngx-bootstrap)
     NgxDatatableModule,
     NgBootstrapFormValidationModule.forRoot()
   ],

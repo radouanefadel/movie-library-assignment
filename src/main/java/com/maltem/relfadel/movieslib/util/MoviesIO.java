@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.HashSet;
 
@@ -28,10 +27,8 @@ public class MoviesIO {
         HashSet<MovieFlatDto> movies = new HashSet<MovieFlatDto>();
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashSet<MovieFlatDto>> typeReference = new TypeReference<HashSet<MovieFlatDto>>(){};
-        InputStream inputStream = TypeReference.class.getResourceAsStream(this.location);
         try {
             movies = mapper.readValue(new File(Paths.get(this.fullPath).toAbsolutePath().toString()), typeReference);
-            inputStream.close();
         } catch (IOException e) {
             System.out.println("Error while reading the JSON file!");
         }
